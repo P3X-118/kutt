@@ -1,13 +1,13 @@
 name: docker-build-latest
 
 env:
-  dockerhub_repository: "kutt/kutt"
-  dockerhub_tag: "main"
+  dockerhub_repository: "legitservices/kutt"
+  dockerhub_tag: "latest"
 
 on:
   push:
     branches:
-      - main
+      - sgc
 
 jobs:
   dockerhub-build-push:
@@ -38,8 +38,8 @@ jobs:
           tags: ${{ env.dockerhub_repository }}:${{ env.dockerhub_tag }}
       -
         name: Update repo description
-        uses: peter-evans/dockerhub-description@v2
+        uses: peter-evans/dockerhub-description@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: ${{ env.dockerhub_repository }}

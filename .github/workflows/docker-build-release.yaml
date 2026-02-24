@@ -1,7 +1,7 @@
 name: docker-build-release
 
 env:
-  dockerhub_repository: "kutt/kutt"
+  dockerhub_repository: "legitservices/kutt"
 
 on:
   release:
@@ -34,3 +34,10 @@ jobs:
           context: .
           push: true
           tags: ${{ env.dockerhub_repository }}:${{ github.event.release.tag_name }}, ${{ env.dockerhub_repository }}:latest
+      -
+        name: Update repo description
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ env.dockerhub_repository }}
